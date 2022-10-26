@@ -8,7 +8,7 @@ app.set("view engine", "handlebars");
 app.engine("handlebars", exphbs.engine());
 
 app.get("/", (req, res) => {
-  const title = "Welcome, my friend";
+  const title = "Welcome";
   return res.render("index", {
     title,
   });
