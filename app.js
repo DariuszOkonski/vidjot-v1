@@ -1,7 +1,13 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const mongoose = require("mongoose");
 
 const app = express();
+
+mongoose
+  .connect("mongodb://localhost:27017/vidjot-dev")
+  .then(() => console.log("MongoDB Connected..."))
+  .catch((err) => console.log(err));
 
 //View engine setup
 app.set("view engine", "handlebars");
