@@ -1,0 +1,7 @@
+express: 
+  https://expressjs.com/en/api.html
+handlebars: 
+  https://handlebarsjs.com/
+  https://www.npmjs.com/package/express-handlebars
+bootstrap:
+  https://getbootstrap.com/docs/4.6/getting-started/introduction/
