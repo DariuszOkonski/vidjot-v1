@@ -7,3 +7,5 @@ bootstrap:
   https://getbootstrap.com/docs/4.6/getting-started/introduction/
 mongoose:
   https://mongoosejs.com/
+bodyparser:
+  https://www.npmjs.com/package/body-parser
