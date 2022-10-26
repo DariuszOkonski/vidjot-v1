@@ -32,8 +32,31 @@ app.get("/about", (req, res) => {
   return res.render("about");
 });
 
+app.get("/ideas", (req, res) => {
+  Idea.find({})
+    .lean() // solve problems with displaying by default properties
+    .sort({ date: "desc" })
+    .then((ideas) => {
+      res.render("ideas/index", {
+        ideas,
+      });
+    });
+});
+
 app.get("/ideas/add", (req, res) => {
   return res.render("ideas/add");
+});
+
+app.get("/ideas/edit/:id", (req, res) => {
+  Idea.findOne({
+    _id: req.params.id,
+  })
+    .lean()
+    .then((idea) => {
+      res.render("ideas/edit", {
+        idea,
+      });
+    });
 });
 
 app.post("/ideas", (req, res) => {
