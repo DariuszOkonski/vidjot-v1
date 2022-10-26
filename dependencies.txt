@@ -9,3 +9,5 @@ mongoose:
   https://mongoosejs.com/
 bodyparser:
   https://www.npmjs.com/package/body-parser
+method-override:
+  https://www.npmjs.com/package/method-override
