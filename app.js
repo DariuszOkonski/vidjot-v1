@@ -9,6 +9,9 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
+require("./models/Idea");
+const Idea = mongoose.model("ideas");
+
 //View engine setup
 app.set("view engine", "handlebars");
 app.engine("handlebars", exphbs.engine());
