@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const flash = require("connect-flash");
 
 const routerIdeas = express.Router();
 
@@ -55,6 +56,7 @@ routerIdeas.post("/", (req, res) => {
     };
 
     new Idea(newUser).save().then((idea) => {
+      req.flash("success_msg", "Video idea added");
       res.redirect("/ideas");
     });
   }
@@ -73,6 +75,7 @@ routerIdeas.put("/:id", (req, res) => {
     idea.title = req.body.title;
     idea.details = req.body.details;
     idea.save().then((idea) => {
+      req.flash("success_msg", "Video idea updated");
       res.redirect("/ideas");
     });
   });
@@ -82,6 +85,7 @@ routerIdeas.delete("/:id", (req, res) => {
   Idea.findByIdAndDelete({
     _id: req.params.id,
   }).then(() => {
+    req.flash("success_msg", "Video idea removed");
     res.redirect("/ideas");
   });
 });
