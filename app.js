@@ -7,6 +7,8 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const routerMain = require("./routes/main");
 const routerIdeas = require("./routes/ideas");
+const routerUsers = require("./routes/users");
+const path = require("path");
 
 const app = express();
 
@@ -21,6 +23,10 @@ app.engine("handlebars", exphbs.engine());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// static folder
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(methodOverride("_method"));
 
 // Express session middleware
@@ -45,6 +51,7 @@ app.use(function (req, res, next) {
 // routes
 app.use("/", routerMain);
 app.use("/ideas", routerIdeas);
+app.use("/users", routerUsers);
 
 const port = 5000;
 app.listen(port, () => {

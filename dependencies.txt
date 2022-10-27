@@ -13,5 +13,7 @@ method-override:
   https://www.npmjs.com/package/method-override
 express-session:
   https://www.npmjs.com/package/express-session
-connect-flash
+connect-flash:
   https://www.npmjs.com/package/connect-flash
+passport: (use local strategy)
+  https://www.passportjs.org/
