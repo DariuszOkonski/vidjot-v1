@@ -17,3 +17,5 @@ connect-flash:
   https://www.npmjs.com/package/connect-flash
 passport: (use local strategy)
   https://www.passportjs.org/
+bcrypt:
+  https://www.npmjs.com/package/bcryptjs
