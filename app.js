@@ -13,7 +13,7 @@ const path = require("path");
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost:27017/vidjot-dev")
+  .connect("mongodb://127.0.0.1:27017/vidjot-dev")
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
