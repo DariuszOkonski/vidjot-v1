@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 // const flash = require("connect-flash");
+const { ensureAuthenticated } = require("../helpers/auth");
 
 const routerIdeas = express.Router();
 
 require("../models/Idea");
 const Idea = mongoose.model("ideas");
 
-routerIdeas.get("/", (req, res) => {
+routerIdeas.get("/", ensureAuthenticated, (req, res) => {
   Idea.find({})
     .lean() // solve problems with displaying by default properties
     .sort({ date: "desc" })
@@ -18,11 +19,11 @@ routerIdeas.get("/", (req, res) => {
     });
 });
 
-routerIdeas.get("/add", (req, res) => {
+routerIdeas.get("/add", ensureAuthenticated, (req, res) => {
   return res.render("ideas/add");
 });
 
-routerIdeas.get("/edit/:id", (req, res) => {
+routerIdeas.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id,
   })
@@ -34,7 +35,7 @@ routerIdeas.get("/edit/:id", (req, res) => {
     });
 });
 
-routerIdeas.post("/", (req, res) => {
+routerIdeas.post("/", ensureAuthenticated, (req, res) => {
   let errors = [];
   if (!req.body.title) {
     errors.push({ text: "Please add a title" });
@@ -62,12 +63,12 @@ routerIdeas.post("/", (req, res) => {
   }
 });
 
-routerIdeas.get("/", (req, res) => {
+routerIdeas.get("/", ensureAuthenticated, (req, res) => {
   return res.send("Welcome ideas");
 });
 
 // edit form process
-routerIdeas.put("/:id", (req, res) => {
+routerIdeas.put("/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({
     _id: req.params.id,
   }).then((idea) => {
@@ -81,7 +82,7 @@ routerIdeas.put("/:id", (req, res) => {
   });
 });
 
-routerIdeas.delete("/:id", (req, res) => {
+routerIdeas.delete("/:id", ensureAuthenticated, (req, res) => {
   Idea.findByIdAndDelete({
     _id: req.params.id,
   }).then(() => {
