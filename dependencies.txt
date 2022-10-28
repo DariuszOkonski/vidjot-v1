@@ -21,3 +21,5 @@ passport-local:
   https://www.npmjs.com/package/passport-local
 bcrypt:
   https://www.npmjs.com/package/bcryptjs
+
+create global variable for user to check if is log in or not
