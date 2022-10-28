@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const flash = require("connect-flash");
 const { ensureAuthenticated } = require("../helpers/auth");
 
 const routerIdeas = express.Router();
@@ -9,7 +8,7 @@ require("../models/Idea");
 const Idea = mongoose.model("ideas");
 
 routerIdeas.get("/", ensureAuthenticated, (req, res) => {
-  Idea.find({})
+  Idea.find({ user: req.user.id })
     .lean() // solve problems with displaying by default properties
     .sort({ date: "desc" })
     .then((ideas) => {
@@ -29,9 +28,14 @@ routerIdeas.get("/edit/:id", ensureAuthenticated, (req, res) => {
   })
     .lean()
     .then((idea) => {
-      res.render("ideas/edit", {
-        idea,
-      });
+      if (idea.user !== req.user.id) {
+        req.flash("error_msg", "Not Authorized");
+        res.redirect("/ideas");
+      } else {
+        res.render("ideas/edit", {
+          idea,
+        });
+      }
     });
 });
 
@@ -54,6 +58,7 @@ routerIdeas.post("/", ensureAuthenticated, (req, res) => {
     const newUser = {
       title: req.body.title,
       details: req.body.details,
+      user: req.user.id,
     };
 
     new Idea(newUser).save().then((idea) => {
@@ -61,10 +66,6 @@ routerIdeas.post("/", ensureAuthenticated, (req, res) => {
       res.redirect("/ideas");
     });
   }
-});
-
-routerIdeas.get("/", ensureAuthenticated, (req, res) => {
-  return res.send("Welcome ideas");
 });
 
 // edit form process
