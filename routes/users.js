@@ -16,6 +16,14 @@ routerUsers.get("/register", (req, res) => {
   res.render("users/register");
 });
 
+routerUsers.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/ideas",
+    failureRedirect: "/users/register",
+    failureFlash: true,
+  })(req, res, next);
+});
+
 routerUsers.post("/register", (req, res) => {
   let errors = [];
   if (req.body.password !== req.body.password2) {
@@ -44,7 +52,7 @@ routerUsers.post("/register", (req, res) => {
     User.findOne({ email: req.body.email }).then((user) => {
       if (user) {
         req.flash("error_msg", "Email already registered");
-        return res.redirect("/users/login");
+        return res.redirect("/users/register");
       } else {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {

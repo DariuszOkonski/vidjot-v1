@@ -9,6 +9,7 @@ const routerMain = require("./routes/main");
 const routerIdeas = require("./routes/ideas");
 const routerUsers = require("./routes/users");
 const path = require("path");
+const passport = require("passport");
 
 const app = express();
 
@@ -52,6 +53,9 @@ app.use(function (req, res, next) {
 app.use("/", routerMain);
 app.use("/ideas", routerIdeas);
 app.use("/users", routerUsers);
+
+// passport config
+require("./config/passport")(passport);
 
 const port = 5000;
 app.listen(port, () => {
